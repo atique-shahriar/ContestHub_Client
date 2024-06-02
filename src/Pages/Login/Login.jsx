@@ -1,7 +1,51 @@
+import { GoogleAuthProvider } from "firebase/auth";
+import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
+  const {signInUser, signInGoogle} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        e.target.reset();
+        Swal.fire("Successfully login");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error("Wrong email or password");
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    const googleProvider = new GoogleAuthProvider();
+    signInGoogle(googleProvider)
+      .then((result) => {
+        Swal.fire("Successfully login");
+        navigate("/");
+        const name = result.user.displayName;
+        const email = result.user.email;
+        const photo = result.user.photoURL;
+        console.log(name, email, photo);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error("Login failed");
+      });
+  };
+
   return (
     <div className="w-11/12 md:w-1/2 mx-auto h-screen flex items-center justify-center py-10">
       <div className="flex-1 grid md:grid-cols-2 gap-10 bg-gray-100">
@@ -17,7 +61,9 @@ const Login = () => {
         <div className="flex-1 border-l-2 border-gray-200  py-8 px-12 h-fit">
           <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">Login</h3>
           <div>
-            <form className="space-y-4">
+            <form
+              className="space-y-4"
+              onSubmit={handleLogin}>
               <div className="space-y-2">
                 <label>Email</label>
                 <input
@@ -49,15 +95,10 @@ const Login = () => {
           </div>
           <div className="space-y-4 mt-4 text-center">
             <p>Or login with</p>
-            <div className="flex justify-center items-center gap-6 text-5xl hover:cursor-pointer">
+            <div
+              className="flex justify-center items-center gap-6 text-5xl hover:cursor-pointer"
+              onClick={handleGoogleSignIn}>
               <FcGoogle></FcGoogle>
-              <button>
-                <img
-                  src="./fb.png"
-                  alt=""
-                  className="w-11"
-                />
-              </button>
             </div>
             <p>
               Don&apos;t have an account?{" "}

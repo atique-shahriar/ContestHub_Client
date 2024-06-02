@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
@@ -35,7 +36,7 @@ const Register = () => {
             console.log(error.message);
           });
         //   e.target.reset();
-        toast.success("Successfully Registered");
+        Swal.fire("Your are successfully registered");
         //   axios
         //     .post(
         //       "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",

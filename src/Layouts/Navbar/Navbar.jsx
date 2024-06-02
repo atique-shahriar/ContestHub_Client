@@ -1,7 +1,17 @@
+import { useContext } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
+  const {user, signOutUser} = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser();
+    toast.success("Signout Successfully");
+  };
+
   const navItems = (
     <>
       <li>
@@ -77,16 +87,55 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end ">
-          <div
-            className="tooltip"
-            data-tip="Login">
-            <Link
-              className="text-xl flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md"
-              to="/login">
-              Login
-              <IoMdLogIn className="text-3xl text-[]"></IoMdLogIn>
-            </Link>
-          </div>
+          {user ? (
+            <>
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar">
+                  <div className="rounded-[100%] w-12">
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt="Photo"
+                        title={user.displayName}
+                      />
+                    ) : (
+                      <img
+                        src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png"
+                        alt=""
+                      />
+                    )}
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100  w-40">
+                  <li>{user?.displayName}</li>
+                  <li>
+                    <a>Dashboard</a>
+                  </li>
+                  <li>
+                    <a onClick={handleSignOut}>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="tooltip"
+                data-tip="Login">
+                <Link
+                  className="text-xl flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md"
+                  to="/login">
+                  Login
+                  <IoMdLogIn className="text-3xl text-[]"></IoMdLogIn>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
