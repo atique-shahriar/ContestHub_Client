@@ -2,10 +2,13 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Register = () => {
   const {createUser, updateCreateUser} = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+
   const navigate = useNavigate();
   const handleRegisterInfo = (e) => {
     e.preventDefault();
@@ -13,8 +16,6 @@ const Register = () => {
     const photoUrl = e.target.photoUrl.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const user = {name, photoUrl, email, password};
-    console.log(user);
 
     if (password.length < 6) {
       toast.error("Password should be at least 6 characters");
@@ -35,28 +36,15 @@ const Register = () => {
           .catch((error) => {
             console.log(error.message);
           });
-        //   e.target.reset();
-        Swal.fire("Your are successfully registered");
-        //   axios
-        //     .post(
-        //       "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",
-        //       {email},
-        //       {withCredentials: true}
-        //     )
-        //     .then((res) => {
-        //       console.log(res.data);
-        //       if (res.data.success) {
-        //         setTimeout(() => {
-        //           navigate("/");
-        //           window.location.reload();
-        //         }, 1000);
-        //       }
-        //     });
 
-        // const user = {name, email, photoUrl};
-        // axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
-        //   console.log(res.data);
-        // });
+        //   e.target.reset();
+        const userInfo = {name, email, photoUrl};
+        axiosPublic.post("/users", userInfo).then((res) => {
+          console.log(res.data);
+        });
+
+        Swal.fire("Register Successfully");
+        navigate("/");
       })
       .catch((error) => {
         toast.error("Error Occured");

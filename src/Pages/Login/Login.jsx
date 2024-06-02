@@ -4,9 +4,11 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
+  const axiosPublic = useAxiosPublic();
   const {signInUser, signInGoogle} = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -37,8 +39,11 @@ const Login = () => {
         navigate("/");
         const name = result.user.displayName;
         const email = result.user.email;
-        const photo = result.user.photoURL;
-        console.log(name, email, photo);
+        const photoURL = result.user.photoURL;
+        const user = {name, email, photoURL};
+        axiosPublic.post("/users", user).then((res) => {
+          console.log(res.data);
+        });
       })
       .catch((error) => {
         console.log(error.message);
