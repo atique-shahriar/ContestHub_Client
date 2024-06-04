@@ -20,6 +20,9 @@ const PopularContestCard = ({contest}) => {
       <div className="flex justify-center gap-4 my-2">
         <span className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm text-gray-600">Total Participants: {participants}</span>
       </div>
+      <div>
+        <h3 className="text-center">{description.slice(0, 50)}...</h3>
+      </div>
 
       <div className="flex justify-center mt-2">
         <Link
