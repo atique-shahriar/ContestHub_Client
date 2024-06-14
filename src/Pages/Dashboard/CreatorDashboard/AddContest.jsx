@@ -1,14 +1,51 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosPublic";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const AddContest = () => {
   const [startDate, setStartDate] = useState(new Date());
+  const {user} = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+
+  const handleAddContest = (e) => {
+    e.preventDefault();
+    const contestName = e.target.contestName.value;
+    const contestImageUrl = e.target.contestImageUrl.value;
+    const contestDescription = e.target.contestDescription.value;
+    const contestPrice = e.target.contestPrice.value;
+    const contestPriceMoney = e.target.contestPriceMoney.value;
+    const contestSubmissionInstruction = e.target.contestSubmissionInstruction.value;
+    const contestType = e.target.contestType.value;
+    const contestDeadline = startDate;
+    const contestCreatorEmail = user.email;
+    const confirmation = false;
+    const contestInfo = {
+      contestName,
+      contestImageUrl,
+      contestDescription,
+      contestPrice,
+      contestPriceMoney,
+      contestSubmissionInstruction,
+      contestType,
+      contestDeadline,
+      contestCreatorEmail,
+      confirmation,
+    };
+
+    axiosSecure.post("/contests", contestInfo).then((res) => {
+      console.log(res.data);
+    });
+
+    Swal.fire("Contest Added Successfully");
+  };
   return (
     <div className="px-20">
       <h2 className="text-xl font-bold text-[#FF3811] mb-4 text-center">Add Contest</h2>
-      <form>
+      <form onSubmit={handleAddContest}>
         <div>
           <label className="block font-bold mb-2">Contest Name</label>
           <input
@@ -76,6 +113,7 @@ const AddContest = () => {
 
         <div className="flex pb-2">
           <select
+            name="contestType"
             className="select w-full border select-bordered"
             defaultValue={"default"}>
             <option
