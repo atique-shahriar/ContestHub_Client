@@ -114,7 +114,7 @@ const Navbar = () => {
                   className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100  w-40">
                   <li>{user?.displayName}</li>
                   <li>
-                    <NavLink to="/dashboard">Dashboard</NavLink>
+                    <NavLink to={"/dashboard"}>Dashboard</NavLink>
                   </li>
                   <li>
                     <a onClick={handleSignOut}>Logout</a>

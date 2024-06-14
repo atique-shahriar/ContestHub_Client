@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { FaUsers } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
@@ -41,12 +40,23 @@ const ManageUser = () => {
       }
     });
   };
-  const handleMakeAdmin = (user) => {
-    axiosSecure.put(`/users/${user._id}`).then((res) => {
+
+  const handleBlocker = (user) => {
+    axiosSecure.put(`/usersActivity/${user._id}`, {activity: "Block"}).then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
         refetch();
-        toast.success(`${user.name} is an admin now!`);
+        toast.success(`${user.name} is block now!`);
+      }
+    });
+  };
+
+  const handleUnBlocker = (user) => {
+    axiosSecure.put(`/usersActivity/${user._id}`, {activity: "Unblock"}).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        refetch();
+        toast.success(`${user.name} is block now!`);
       }
     });
   };
@@ -76,8 +86,10 @@ const ManageUser = () => {
               <th>SL</th>
               <th>Name</th>
               <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>Role</th>
+              <th>Role Manage</th>
+              <th>Delete</th>
+              <th>Block Status</th>
             </tr>
           </thead>
           <tbody>
@@ -88,13 +100,7 @@ const ManageUser = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.role == "Admin" ? "Admin" : user.role == "Creator" ? "Creator" : "User"}</td>
-                <td>
-                  <button
-                    className="text-2xl bg-blue-500 text-white p-2 rounded-md"
-                    onClick={() => handleMakeAdmin(user)}>
-                    <FaUsers></FaUsers>
-                  </button>
-                </td>
+
                 <td>
                   <select
                     className="select select-bordered w-full max-w-xs"
@@ -116,12 +122,33 @@ const ManageUser = () => {
                         </option>
                       ))}
                   </select>
+                </td>
 
+                <td>
                   <button
                     className="btn"
                     onClick={() => handleDeleteUser(user)}>
                     Delete
                   </button>
+                </td>
+                <td>
+                  {user.activity == "Block" ? (
+                    <>
+                      <button
+                        className="btn"
+                        onClick={() => handleUnBlocker(user)}>
+                        Unblock
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="btn"
+                        onClick={() => handleBlocker(user)}>
+                        Block
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

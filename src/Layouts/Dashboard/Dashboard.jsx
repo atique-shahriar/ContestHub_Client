@@ -1,19 +1,47 @@
+import { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const {user} = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const [users, setUsers] = useState([]);
+  const mail = user?.email;
+
+  useEffect(() => {
+    axiosSecure.get("/users").then((res) => setUsers(res.data));
+  }, [axiosSecure]);
+
+  const currentUser = users.filter((user) => user.email == mail);
+  console.log(currentUser);
+
+  const role = currentUser[0]?.role;
+  console.log(role);
 
   return (
     <div className="flex">
       <div className="w-64 bg-blue-500 min-h-screen">
         <ul className="menu">
-          {isAdmin ? (
+          {role == "Admin" ? (
             <>
               <li>
                 <NavLink to="manageUser">Manage User</NavLink>
               </li>
               <li>
                 <NavLink to="manageContest">Manage Contest</NavLink>
+              </li>
+            </>
+          ) : role == "Creator" ? (
+            <>
+              <li>
+                <NavLink to="addContest">Add Contest</NavLink>
+              </li>
+              <li>
+                <NavLink to="myCreatedContest">My Created Contest</NavLink>
+              </li>
+              <li>
+                <NavLink to="contestSubmittedPage">Contest Submitted Page</NavLink>
               </li>
             </>
           ) : (
