@@ -1,3 +1,5 @@
+import { useState } from "react";
+import Countdown from "react-countdown";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 
 const ContestDetail = () => {
@@ -6,6 +8,8 @@ const ContestDetail = () => {
 
   let contestsInfo = contests.find((item) => item._id == id);
   const {contestName, contestImageUrl, contestDescription, contestPrice, contestPriceMoney, contestSubmissionInstruction, contestType, contestDeadline, contestCreatorEmail, contestCreatorName, contestParticipants, confirmation} = contestsInfo;
+
+  const [contestOver, setContestOver] = useState(false);
 
   return (
     <div className="shadow-lg mb-1">
@@ -31,6 +35,23 @@ const ContestDetail = () => {
               <span className="font-bold text-lg text-[#3672B7]">Price: </span>
               {contestPrice}
             </p>
+            <p>
+              Availability:
+              <Countdown
+                date={contestDeadline}
+                renderer={({days, hours, minutes, seconds, completed}) => {
+                  if (completed) {
+                    return <span> Not Availabe {setContestOver(true)}</span>;
+                  } else {
+                    return (
+                      <span>
+                        {days} days, {hours} hours, {minutes} minutes, {seconds} seconds
+                      </span>
+                    );
+                  }
+                }}
+              />
+            </p>
 
             <p className="pb-6">
               <span className="font-bold text-lg text-[#3672B7]">Created By:</span>
@@ -42,9 +63,18 @@ const ContestDetail = () => {
           </div>
         </div>
         <div className="flex items-center justify-center mt-12 mb-10">
-          <Link to={"/"}>
-            <button className="bg-[#6ab8fa] hover:bg-[#3672B7] w-56 py-3 rounded-xl font-bold text-white">Contest Registration</button>
-          </Link>
+          {contestOver == true ? (
+            <>
+              <button className="btn w-56 py-3 rounded-xl font-bold btn-disabled">Cannot Registration</button>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link to={"/"}>
+                <button className="bg-[#6ab8fa] hover:bg-[#3672B7] w-56 py-3 rounded-xl font-bold text-white ">Contest Registration</button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>
