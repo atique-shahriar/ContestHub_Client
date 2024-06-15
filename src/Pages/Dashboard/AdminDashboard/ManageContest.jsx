@@ -97,7 +97,10 @@ const ManageContest = () => {
             {contests.map((contest, index) => (
               <tr key={contest._id}>
                 <th>{index + 1}</th>
-                <td>{contest.name}</td>
+                <td>
+                  {contest.contestName} <br />
+                  {contest.contestCreatorName}
+                </td>
                 <td>{contest.participants}</td>
 
                 <td>

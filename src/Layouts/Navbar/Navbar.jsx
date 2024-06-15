@@ -25,7 +25,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/allContest"
+          to="/allContest/all"
           style={({isActive}) => {
             return isActive ? {background: "#3672B7", color: "white", fontWeight: "700"} : {};
           }}>

@@ -1,9 +1,8 @@
 import { PropTypes } from "prop-types";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
-const PopularContestCard = ({contest}) => {
-  const {_id, contestName, contestImageUrl, contestDescription, contestParticipants} = contest;
+const TypeContest = ({contestType}) => {
+  const {_id, contestName, contestImageUrl, contestDescription, contestParticipants} = contestType;
   return (
     <div className="p-4 border border-[#e8f5ff] rounded-lg shadow-md shadow-orange-100">
       <div className="flex justify-center items-center">
@@ -26,7 +25,7 @@ const PopularContestCard = ({contest}) => {
 
       <div className="flex justify-center mt-2">
         <Link
-          to={`/contests/${_id}`}
+          to={`/contestDetails/${_id}`}
           className=" font-medium text-[#199DFF] border hover:border-2 border-[#199DFF] rounded-lg px-4 hover:font-bold flex items-center gap-2">
           <span>More Details</span>
           <FaArrowRight />
@@ -35,9 +34,8 @@ const PopularContestCard = ({contest}) => {
     </div>
   );
 };
-
-PopularContestCard.propTypes = {
-  contest: PropTypes.object,
+TypeContest.propTypes = {
+  contestType: PropTypes.object,
 };
 
-export default PopularContestCard;
+export default TypeContest;

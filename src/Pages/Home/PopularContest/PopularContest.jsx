@@ -12,7 +12,7 @@ const PopularContest = () => {
     });
   }, [axiosPublic]);
 
-  let displayContests = contests;
+  let displayContests = contests.filter((item) => item.confirmation == true);
 
   if (displayContests.length > 6) {
     displayContests = contests.slice(0, 6);

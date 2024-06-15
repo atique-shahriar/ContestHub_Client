@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
+import AllContest from "../Pages/AllContest/AllContest";
+import ContestDetail from "../Pages/ContestDetails/ContestDetail";
 import ManageContest from "../Pages/Dashboard/AdminDashboard/ManageContest";
 import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser";
 import AddContest from "../Pages/Dashboard/CreatorDashboard/AddContest";
@@ -30,6 +32,15 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>,
+      },
+      {
+        path: "allContest/:type",
+        element: <AllContest></AllContest>,
+      },
+      {
+        path: "contestDetails/:id",
+        element: <ContestDetail></ContestDetail>,
+        loader: () => fetch("http://localhost:5000/contests"),
       },
     ],
   },
