@@ -22,6 +22,8 @@ const AddContest = () => {
     const contestType = e.target.contestType.value;
     const contestDeadline = startDate;
     const contestCreatorEmail = user.email;
+    const contestCreatorName = user.name;
+    const contestParticipants = 0;
     const confirmation = false;
     const contestInfo = {
       contestName,
@@ -33,6 +35,8 @@ const AddContest = () => {
       contestType,
       contestDeadline,
       contestCreatorEmail,
+      contestCreatorName,
+      contestParticipants,
       confirmation,
     };
 
@@ -111,7 +115,8 @@ const AddContest = () => {
           />
         </div>
 
-        <div className="flex pb-2">
+        <div className="flex pb-2 flex-col">
+          <label className="block font-bold mb-2">Contest Type</label>
           <select
             name="contestType"
             className="select w-full border select-bordered"
