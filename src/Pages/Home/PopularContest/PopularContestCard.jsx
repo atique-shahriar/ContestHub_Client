@@ -7,11 +7,7 @@ const PopularContestCard = ({contest}) => {
   return (
     <div className="p-4 border border-[#e8f5ff] rounded-lg shadow-md shadow-orange-100">
       <div className="flex justify-center items-center">
-        <img
-          src={contestImageUrl}
-          alt="Not Found"
-          className="h-[150px] w-[150px] shadow-md rounded-[100%] p-3"
-        />
+        <img src={contestImageUrl} alt="Not Found" className="h-[150px] w-[150px] shadow-md rounded-[100%] p-3" />
       </div>
 
       <div>
@@ -25,9 +21,7 @@ const PopularContestCard = ({contest}) => {
       </div>
 
       <div className="flex justify-center mt-2">
-        <Link
-          to={`/contests/${_id}`}
-          className=" font-medium text-[#199DFF] border hover:border-2 border-[#199DFF] rounded-lg px-4 hover:font-bold flex items-center gap-2">
+        <Link to={`/contestDetails/${_id}`} className=" font-medium text-[#199DFF] border hover:border-2 border-[#199DFF] rounded-lg px-4 hover:font-bold flex items-center gap-2">
           <span>More Details</span>
           <FaArrowRight />
         </Link>

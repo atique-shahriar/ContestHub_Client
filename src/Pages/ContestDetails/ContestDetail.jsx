@@ -7,7 +7,7 @@ const ContestDetail = () => {
   const contests = useLoaderData();
 
   let contestsInfo = contests.find((item) => item._id == id);
-  const {contestName, contestImageUrl, contestDescription, contestPrice, contestPriceMoney, contestSubmissionInstruction, contestType, contestDeadline, contestCreatorEmail, contestCreatorName, contestParticipants, confirmation} = contestsInfo;
+  const {_id, contestName, contestImageUrl, contestDescription, contestPrice, contestPriceMoney, contestSubmissionInstruction, contestType, contestDeadline, contestCreatorEmail, contestCreatorName, contestParticipants, confirmation} = contestsInfo;
 
   const [contestOver, setContestOver] = useState(false);
 
@@ -21,7 +21,8 @@ const ContestDetail = () => {
               className="hero h-[280px] md:h-[400px] lg:h-[550px] xl:h-[600px] bg-cover shadow-xl rounded-lg mb-6"
               style={{
                 backgroundImage: `url(${contestImageUrl})`,
-              }}>
+              }}
+            >
               <div className="hero-overlay bg-opacity-40 rounded-lg"></div>
             </div>
           </div>
@@ -70,7 +71,7 @@ const ContestDetail = () => {
           ) : (
             <>
               {" "}
-              <Link to={"/"}>
+              <Link to={`/payment/${_id}`}>
                 <button className="bg-[#6ab8fa] hover:bg-[#3672B7] w-56 py-3 rounded-xl font-bold text-white ">Contest Registration</button>
               </Link>
             </>

@@ -13,6 +13,7 @@ import MyProfile from "../Pages/Dashboard/UserDashboard/MyProfile";
 import MyWinningContest from "../Pages/Dashboard/UserDashboard/MyWinningContest";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
+import Payment from "../Pages/Payment/Payment";
 import Register from "../Pages/Register/Register";
 import PrivateRoute from "../Providers/PrivateRoute";
 
@@ -40,6 +41,11 @@ export const router = createBrowserRouter([
       {
         path: "contestDetails/:id",
         element: <ContestDetail></ContestDetail>,
+        loader: () => fetch("http://localhost:5000/contests"),
+      },
+      {
+        path: "payment/:id",
+        element: <Payment></Payment>,
         loader: () => fetch("http://localhost:5000/contests"),
       },
     ],
