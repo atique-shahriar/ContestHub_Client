@@ -40,12 +40,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "contestDetails/:id",
-        element: <ContestDetail></ContestDetail>,
+        element: (
+          <PrivateRoute>
+            <ContestDetail></ContestDetail>
+          </PrivateRoute>
+        ),
         loader: () => fetch("http://localhost:5000/contests"),
       },
       {
         path: "payment/:id",
-        element: <Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
         loader: () => fetch("http://localhost:5000/contests"),
       },
     ],
