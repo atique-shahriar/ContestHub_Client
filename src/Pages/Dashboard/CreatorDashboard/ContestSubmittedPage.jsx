@@ -15,7 +15,7 @@ const ContestSubmittedPage = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Contests: {contests.length}</h3>
+      <h3 className="text-center text-3xl">Total Contests: {displayContests.length}</h3>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

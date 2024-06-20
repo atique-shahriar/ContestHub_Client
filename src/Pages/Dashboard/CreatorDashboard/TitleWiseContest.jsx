@@ -7,15 +7,8 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 const TitleWiseContest = () => {
   const {id} = useParams();
 
-  const [allContests, setAllContests] = useState([]);
   const [winner, setWinner] = useState(false);
   const axiosSecure = useAxiosSecure();
-
-  useEffect(() => {
-    axiosSecure.get("/contests").then((res) => {
-      setAllContests(res.data);
-    });
-  }, [axiosSecure]);
 
   const {data: payments = [], refetch} = useQuery({
     queryKey: ["payments"],
@@ -36,9 +29,6 @@ const TitleWiseContest = () => {
     }
   }, [payments]);
 
-  const specificContest = allContests.filter((item) => item._id == id);
-  const {contestName} = specificContest;
-
   const handleSelectWinner = (contest) => {
     console.log(contest._id);
     axiosSecure
@@ -55,7 +45,7 @@ const TitleWiseContest = () => {
 
     const paymentId = contest._id;
     const participantContestId = contest.contestId;
-    const participantContestName = contestName;
+    const participantContestName = contest.contestName;
     const participantName = contest.name;
     const participantEmail = contest.email;
 
@@ -92,7 +82,7 @@ const TitleWiseContest = () => {
             {titleContest.map((contest, index) => (
               <tr key={contest._id}>
                 <th>{index + 1}</th>
-                <td>{contestName}</td>
+                <td>{contest.contestName}</td>
                 <td>{contest.email}</td>
                 <td>{contest.name}</td>
                 <td>
