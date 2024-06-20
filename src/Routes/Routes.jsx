@@ -8,6 +8,7 @@ import ManageUser from "../Pages/Dashboard/AdminDashboard/ManageUser";
 import AddContest from "../Pages/Dashboard/CreatorDashboard/AddContest";
 import ContestSubmittedPage from "../Pages/Dashboard/CreatorDashboard/ContestSubmittedPage";
 import MyCreatedContest from "../Pages/Dashboard/CreatorDashboard/MyCreatedContest";
+import TitleWiseContest from "../Pages/Dashboard/CreatorDashboard/TitleWiseContest";
 import MyParticipatedContest from "../Pages/Dashboard/UserDashboard/MyParticipatedContest";
 import MyProfile from "../Pages/Dashboard/UserDashboard/MyProfile";
 import MyWinningContest from "../Pages/Dashboard/UserDashboard/MyWinningContest";
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
       {
         path: "contestSubmittedPage",
         element: <ContestSubmittedPage></ContestSubmittedPage>,
+      },
+      {
+        path: "contestSubmittedPage/titleWiseContest/:id",
+        element: <TitleWiseContest></TitleWiseContest>,
       },
 
       {
