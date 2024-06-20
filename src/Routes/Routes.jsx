@@ -11,6 +11,7 @@ import MyCreatedContest from "../Pages/Dashboard/CreatorDashboard/MyCreatedConte
 import MyParticipatedContest from "../Pages/Dashboard/UserDashboard/MyParticipatedContest";
 import MyProfile from "../Pages/Dashboard/UserDashboard/MyProfile";
 import MyWinningContest from "../Pages/Dashboard/UserDashboard/MyWinningContest";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Payment from "../Pages/Payment/Payment";
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -65,6 +67,7 @@ export const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "myParticipatedContest",
