@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex">
-      <div className="w-64 bg-blue-500 min-h-screen">
+      <div className="w-64 bg-[#3672B7] min-h-screen">
         <ul className="menu">
           {role == "Admin" ? (
             <>

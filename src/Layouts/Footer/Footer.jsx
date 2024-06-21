@@ -2,19 +2,13 @@ const Footer = () => {
   return (
     <div>
       <footer className="footer footer-center p-10 bg-gray-100 text-white">
-        <aside>
-          <p className="flex items-center mb-4">
-            <div>
-              <img className="w-16" src="https://static.vecteezy.com/system/resources/thumbnails/014/569/377/small/golden-trophy-for-the-winners-of-the-sport-achievement-award-concept-png.png" alt="" />
-            </div>
-            <div>
-              <p className="font-bold text-xl ml-2 text-blue-600">
-                Contest<span className="block text-blue-600"> Hub</span>
-              </p>
-            </div>
-          </p>
+        <aside className="flex flex-col items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img className="w-16" src="https://static.vecteezy.com/system/resources/thumbnails/014/569/377/small/golden-trophy-for-the-winners-of-the-sport-achievement-award-concept-png.png" alt="" />
+            <p className="font-bold text-3xl text-[#3672B7]">Contest Hub</p>
+          </div>
 
-          <p className="font-medium text-black">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis numquam voluptates a officiis eos voluptatum eum minima accusantium rerum ex?</p>
+          <p className="font-medium text-black">Join our community for the latest updates on contests, exclusive tips, and more. Connect with us on social media and never miss an opportunity to showcase your talent and win big!</p>
         </aside>
 
         <nav>

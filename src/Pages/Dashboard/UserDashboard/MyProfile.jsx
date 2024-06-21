@@ -95,7 +95,7 @@ const MyProfile = () => {
             )}
           </div>
 
-          <button className="py-2 px-8 mt-4 rounded-xl font-bold text-white bg-blue-500" onClick={handleUpdateProfile}>
+          <button className="py-2 px-8 mt-4 rounded-xl font-bold text-white bg-[#3672B7]" onClick={handleUpdateProfile}>
             Update Profile
           </button>
         </div>

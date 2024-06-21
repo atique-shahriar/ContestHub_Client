@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Countdown from "react-countdown";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
@@ -48,6 +49,7 @@ const TitleWiseContest = () => {
     const participantContestName = contest.contestName;
     const participantName = contest.name;
     const participantEmail = contest.email;
+    const participantPhotoUrl = contest.photoUrl;
 
     const winnerInfo = {
       paymentId,
@@ -55,12 +57,15 @@ const TitleWiseContest = () => {
       participantContestName,
       participantName,
       participantEmail,
+      participantPhotoUrl,
     };
     axiosSecure.post("/winners", winnerInfo).then((res) => {
       refetch();
       console.log(res.data);
     });
   };
+
+  const [contestOver, setContestOver] = useState(false);
 
   return (
     <div>
@@ -86,14 +91,38 @@ const TitleWiseContest = () => {
                 <td>{contest.email}</td>
                 <td>{contest.name}</td>
                 <td>
-                  {winner ? (
-                    <>{contest.contestWinner == "Winner" ? <>Win</> : <>Unsuccess</>}</>
-                  ) : (
+                  {
+                    <Countdown
+                      date={contest.contestDate}
+                      renderer={({days, hours, minutes, seconds, completed}) => {
+                        if (completed) {
+                          return <span> Time Up {setContestOver(true)}</span>;
+                        } else {
+                          return (
+                            <span>
+                              {days} days, {hours} hours, {minutes} minutes, {seconds} seconds
+                            </span>
+                          );
+                        }
+                      }}
+                    />
+                  }
+                </td>
+                <td>
+                  {contestOver ? (
                     <>
-                      <button className="btn" onClick={() => handleSelectWinner(contest)}>
-                        Declare Winner
-                      </button>
+                      {winner ? (
+                        <>{contest.contestWinner == "Winner" ? <>Win</> : <>Unsuccess</>}</>
+                      ) : (
+                        <>
+                          <button className="btn" onClick={() => handleSelectWinner(contest)}>
+                            Declare Winner
+                          </button>
+                        </>
+                      )}
                     </>
+                  ) : (
+                    <>Dont Select</>
                   )}
                 </td>
               </tr>

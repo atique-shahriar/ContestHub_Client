@@ -21,15 +21,13 @@ const PopularContest = () => {
 
   return (
     <div className="w-11/12 lg:w-4/5 mx-auto my-10 space-y-8">
-      <div className="text-center space-y-4 flex flex-col items-center">
-        <h3 className="text-3xl font-bold text-[#199DFF]">Popular Contest</h3>
-        <p className=" max-w-screen-lg">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui quis assumenda doloribus id amet ducimus! Perspiciatis blanditiis inventore incidunt laboriosam.</p>
+      <div className="text-center space-y-2 flex flex-col items-center">
+        <h3 className="text-3xl font-bold text-[#3672B7]">Popular Contest</h3>
+        <p className=" max-w-screen-lg">Join our most popular contests and showcase your talents. Compete in various categories, win exciting prizes, and gain recognition in our vibrant community!</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
         {displayContests.map((contest) => (
-          <PopularContestCard
-            key={contest._id}
-            contest={contest}></PopularContestCard>
+          <PopularContestCard key={contest._id} contest={contest}></PopularContestCard>
         ))}
       </div>
     </div>

@@ -14,7 +14,7 @@ const CheckoutForm = ({contest}) => {
 
   const {user} = useContext(AuthContext);
 
-  const {_id, contestName, contestImageUrl, contestParticipants, contestPrice} = contest;
+  const {_id, contestName, contestImageUrl, contestParticipants, contestDeadline, contestPrice} = contest;
 
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", {price: contestPrice}).then((res) => {
@@ -68,9 +68,11 @@ const CheckoutForm = ({contest}) => {
         const payment = {
           email: user.email,
           name: user.displayName,
+          photoUrl: user.photoURL,
           contestId: _id,
           contestName: contestName,
           contestImageUrl: contestImageUrl,
+          contestDate: contestDeadline,
           transactionId: paymentIntent.id,
           contestPrice: contestPrice,
           date: new Date(),

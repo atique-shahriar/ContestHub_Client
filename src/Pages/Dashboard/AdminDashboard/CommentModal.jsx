@@ -53,7 +53,7 @@ const CommentModal = ({contest}) => {
         </div>
       </form>
       <form method="dialog">
-        <button className="btn btn-sm bg-gray-300 hover:bg-blue-500 text-white hover:text-black btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button className="btn btn-sm bg-gray-300 hover:bg-[#3672B7] text-white hover:text-black btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
     </div>
   );
