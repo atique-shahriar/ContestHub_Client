@@ -1,16 +1,48 @@
-import { useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 import { IoMdLogIn } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
   const {user, signOutUser} = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const [myProfile, setMyProfile] = useState(null);
 
   const handleSignOut = () => {
     signOutUser();
     toast.success("Signout Successfully");
   };
+
+  const {data: allUsers = []} = useQuery({
+    queryKey: ["allUsers"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      return res.data;
+    },
+  });
+
+  useEffect(() => {
+    if (user && allUsers.length > 0) {
+      const profile = allUsers.find((item) => item.email === user.email);
+      setMyProfile(profile);
+    }
+  }, [allUsers, user]);
+
+  if (user && !myProfile) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-ring loading-lg"></span>
+        <span className="loading loading-ring loading-lg"></span>
+        <span className="loading loading-ring loading-lg"></span>
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
+  }
+
+  console.log(myProfile ? myProfile.role : "No profile found");
 
   const navItems = (
     <>
@@ -36,6 +68,7 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
     <div className="bg-gray-100">
       <div className="navbar w-11/12 lg:w-4/5 mx-auto p-4">
@@ -70,12 +103,24 @@ const Navbar = () => {
             <>
               <div className="dropdown dropdown-end">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                  <div className="rounded-[100%] w-12">{user.photoURL ? <img src={user.photoURL} alt="Photo" title={user.displayName} /> : <img src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" alt="" />}</div>
+                  <div className="rounded-[100%] w-12">{myProfile.photoUrl ? <img src={myProfile.photoUrl} alt="Photo" title={myProfile.name} /> : <img src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png" alt="" />}</div>
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100  w-40">
-                  <li>{user?.displayName}</li>
+                  <li className="px-3 bg-gray-200 py-1 font-bold">{myProfile?.name}</li>
                   <li>
-                    <NavLink to={"/dashboard"}>Dashboard</NavLink>
+                    {myProfile.role == "Admin" ? (
+                      <>
+                        <NavLink to={"/dashboard/manageUser"}>Dashboard</NavLink>
+                      </>
+                    ) : myProfile.role == "Creator" ? (
+                      <>
+                        <NavLink to={"/dashboard/addContest"}>Dashboard</NavLink>
+                      </>
+                    ) : (
+                      <>
+                        <NavLink to={"/dashboard/myParticipatedContest"}>Dashboard</NavLink>
+                      </>
+                    )}
                   </li>
                   <li>
                     <a onClick={handleSignOut}>Logout</a>
@@ -86,9 +131,9 @@ const Navbar = () => {
           ) : (
             <>
               <div className="tooltip" data-tip="Login">
-                <Link className="text-xl flex items-center gap-2 bg-[#3672B7] text-white px-4 py-2 rounded-md" to="/login">
+                <Link className="hover:text-lg hover:font-bold flex items-center gap-2 bg-[#3672B7] text-white px-4 py-2 rounded-md" to="/login">
                   Login
-                  <IoMdLogIn className="text-3xl text-[]"></IoMdLogIn>
+                  <IoMdLogIn className="text-xl"></IoMdLogIn>
                 </Link>
               </div>
             </>

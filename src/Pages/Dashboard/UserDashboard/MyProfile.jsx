@@ -32,7 +32,7 @@ const MyProfile = () => {
   const numberOfWinning = myWinContest.length;
   const numberOfParticipantContest = participantContest.length;
 
-  const {data: allUsers = [], refetch} = useQuery({
+  const {data: allUsers = []} = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -62,39 +62,39 @@ const MyProfile = () => {
 
   return (
     <div>
-      <h3 className="text-center text-2xl">Profile</h3>
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">Profile</h3>
       <dialog id="updateProfile" className="modal">
         <UpdateModal myProfile={myProfile}></UpdateModal>
       </dialog>
-      <div className="flex justify-center mx-auto flex-col w-56">
-        <h3>Profile Progress:</h3>
-        <ProgressBar completed={(numberOfWinning / numberOfParticipantContest) * 100} maxCompleted={100}></ProgressBar>
-      </div>
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col items-center justify-center h-[400px]">
-          {myProfile.photoUrl ? <img src={myProfile.photoURL} alt="User Photo" className="w-40 h-40 rounded-full" /> : <CgProfile className="w-32 h-32 rounded-full mr-4"></CgProfile>}
-          <div className="flex justify-center gap-4 my-2">
-            <span className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm text-gray-600">Winning Contest: {numberOfWinning}</span>
-            <span className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm text-gray-600">Participate Contest: {numberOfParticipantContest}</span>
-          </div>
-          <div className="flex flex-col items-center">
+
+      <div className="container mx-auto px-4 py-2">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center mb-4">
             {myProfile.name ? (
-              <p className="text-2xl font-semibold ">{myProfile.name}</p>
+              <p className=" font-semibold ">Name: {myProfile.name}</p>
             ) : (
               <div>
-                <p className="text-2xl font-semibold">Name not available</p>
+                <p className="font-semibold text-red-600">Name not available</p>
               </div>
             )}
             <p className="text-gray-600">{myProfile.email}</p>
             {myProfile.address ? (
-              <p className="font-semibold ">Address: {myProfile.address}</p>
+              <p className="">Address: {myProfile.address}</p>
             ) : (
               <div>
-                <p className="font-semibold">Address not available</p>
+                <p className="">Address not available</p>
               </div>
             )}
           </div>
-
+          {myProfile.photoUrl ? <img src={myProfile.photoUrl} alt="User Photo" className="w-40 h-40 mb-4 rounded-full" /> : <CgProfile className="w-32 h-32 mb-4 rounded-full"></CgProfile>}
+          <div className="flex justify-center mx-auto flex-col w-56 mb-4">
+            <h3>Profile Progress:</h3>
+            <ProgressBar completed={(numberOfWinning / numberOfParticipantContest) * 100} maxCompleted={100}></ProgressBar>
+          </div>
+          <div className="flex justify-center gap-4 my-2">
+            <span className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm text-gray-600">Winning Contest: {numberOfWinning}</span>
+            <span className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm text-gray-600">Participate Contest: {numberOfParticipantContest}</span>
+          </div>
           <button className="py-2 px-8 mt-4 rounded-xl font-bold text-white bg-[#3672B7]" onClick={handleUpdateProfile}>
             Update Profile
           </button>

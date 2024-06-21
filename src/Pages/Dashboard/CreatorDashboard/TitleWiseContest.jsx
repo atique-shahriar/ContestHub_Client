@@ -50,6 +50,8 @@ const TitleWiseContest = () => {
     const participantName = contest.name;
     const participantEmail = contest.email;
     const participantPhotoUrl = contest.photoUrl;
+    const participantNumber = contest.contestParticipants;
+    const participantPrize = contest.contestPriceMoney;
 
     const winnerInfo = {
       paymentId,
@@ -58,6 +60,8 @@ const TitleWiseContest = () => {
       participantName,
       participantEmail,
       participantPhotoUrl,
+      participantNumber,
+      participantPrize
     };
     axiosSecure.post("/winners", winnerInfo).then((res) => {
       refetch();

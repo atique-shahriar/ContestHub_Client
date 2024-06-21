@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { MdDeleteOutline } from "react-icons/md";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
@@ -76,18 +77,17 @@ const ManageUser = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Users: {users.length}</h3>
-
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">Total Users: {users.length}</h3>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
-          <thead>
+          <thead className="bg-gray-200">
             <tr>
               <th>SL</th>
               <th>Name</th>
-              <th>Job</th>
+              <th>Email</th>
               <th>Role</th>
-              <th>Role Manage</th>
+              <th>Role Manager</th>
               <th>Delete</th>
               <th>Block Status</th>
             </tr>
@@ -102,22 +102,15 @@ const ManageUser = () => {
                 <td>{user.role == "Admin" ? "Admin" : user.role == "Creator" ? "Creator" : "User"}</td>
 
                 <td>
-                  <select
-                    className="select select-bordered w-full max-w-xs"
-                    onChange={(e) => handleRoleChange(e, user)}
-                    value={user.role}>
-                    <option
-                      value={user.role}
-                      disabled>
+                  <select className="select select-bordered w-full max-w-xs" onChange={(e) => handleRoleChange(e, user)} value={user.role}>
+                    <option value={user.role} disabled>
                       {user.role}
                     </option>
 
                     {roles
                       .filter((role) => role !== user.role)
                       .map((role) => (
-                        <option
-                          key={role}
-                          value={role}>
+                        <option key={role} value={role}>
                           {role}
                         </option>
                       ))}
@@ -125,26 +118,20 @@ const ManageUser = () => {
                 </td>
 
                 <td>
-                  <button
-                    className="btn"
-                    onClick={() => handleDeleteUser(user)}>
-                    Delete
+                  <button className=" text-2xl hover:text-3xl text-red-600" onClick={() => handleDeleteUser(user)}>
+                    <MdDeleteOutline />
                   </button>
                 </td>
                 <td>
                   {user.activity == "Block" ? (
                     <>
-                      <button
-                        className="btn"
-                        onClick={() => handleUnBlocker(user)}>
+                      <button className="btn" onClick={() => handleUnBlocker(user)}>
                         Unblock
                       </button>
                     </>
                   ) : (
                     <>
-                      <button
-                        className="btn"
-                        onClick={() => handleBlocker(user)}>
+                      <button className="btn" onClick={() => handleBlocker(user)}>
                         Block
                       </button>
                     </>

@@ -1,4 +1,4 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { PropTypes } from "prop-types";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -11,10 +11,10 @@ const CheckoutForm = ({contest}) => {
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
-
   const {user} = useContext(AuthContext);
 
-  const {_id, contestName, contestImageUrl, contestParticipants, contestDeadline, contestPrice} = contest;
+  const {_id, contestName, contestImageUrl, contestParticipants, contestPriceMoney, contestDeadline, contestPrice} = contest;
+  const [postalCode, setPostalCode] = useState("");
 
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", {price: contestPrice}).then((res) => {
@@ -30,96 +30,174 @@ const CheckoutForm = ({contest}) => {
       return;
     }
 
-    const card = elements.getElement(CardElement);
+    const cardNumberElement = elements.getElement(CardNumberElement);
+    const cardExpiryElement = elements.getElement(CardExpiryElement);
+    const cardCvcElement = elements.getElement(CardCvcElement);
 
-    if (card == null) {
+    const {error: cardNumberError} = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardNumberElement,
+    });
+
+    if (cardNumberError) {
+      console.log("Card number error", cardNumberError.message);
+      toast.error(cardNumberError.message);
       return;
     }
 
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
+    const {error: expiryError} = await stripe.createPaymentMethod({
       type: "card",
-      card,
+      card: cardExpiryElement,
     });
 
-    if (error) {
-      console.log("error", error);
-      toast.error(error.message);
-    } else {
-      console.log("PaymentMethod", paymentMethod);
-      toast.success("Payment Successfull");
+    if (expiryError) {
+      console.log("Expiry date error", expiryError.message);
+      toast.error(expiryError.message);
+      return;
+    }
+
+    const {error: cvcError} = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardCvcElement,
+    });
+
+    if (cvcError) {
+      console.log("CVC error", cvcError.message);
+      toast.error(cvcError.message);
+      return;
     }
 
     const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: card,
+        card: cardNumberElement,
         billing_details: {
-          email: user?.email || "anonymus",
-          name: user?.displayName || "anonymus",
+          email: user?.email || "anonymous",
+          name: user?.displayName || "anonymous",
+          address: {
+            postal_code: postalCode,
+          },
         },
       },
     });
+
     if (confirmError) {
-      console.log("Confirm Error");
+      console.log("Confirm Error", confirmError.message);
+      toast.error(confirmError.message);
     } else {
       console.log("Payment Intent", paymentIntent);
-      if (paymentIntent.status == "succeeded") {
-        toast.success("Your transaction id: ", paymentIntent.id);
+      toast.success(`Payment Successful. Transaction ID: ${paymentIntent.id}`);
 
-        const payment = {
-          email: user.email,
-          name: user.displayName,
-          photoUrl: user.photoURL,
-          contestId: _id,
-          contestName: contestName,
-          contestImageUrl: contestImageUrl,
-          contestDate: contestDeadline,
-          transactionId: paymentIntent.id,
-          contestPrice: contestPrice,
-          date: new Date(),
-          status: "pending",
-        };
-        const res = await axiosSecure.post("/payments", payment);
-        console.log(res);
+      const payment = {
+        email: user.email,
+        name: user.displayName,
+        photoUrl: user.photoURL,
+        contestId: _id,
+        contestName: contestName,
+        contestImageUrl: contestImageUrl,
+        contestDate: contestDeadline,
+        transactionId: paymentIntent.id,
+        contestPrice: contestPrice,
+        contestParticipants: contestParticipants,
+        contestPriceMoney: contestPriceMoney,
+        date: new Date(),
+        status: "pending",
+      };
 
-        axiosSecure.put(`/contestsParticipants/${_id}`, {participants: contestParticipants}).then((res) => {
-          if (res.data.modifiedCount > 0) {
-            Swal.fire({
-              title: "Confirmed",
-              text: "Participants added",
-              icon: "success",
-            });
-          }
-        });
+      const res = await axiosSecure.post("/payments", payment);
+      console.log("Payment response", res);
 
-        axiosSecure
-          .put(`/contestsRegistered/${_id}`, {
-            contestRegistered: user.email,
-          })
-          .then();
-      }
+      axiosSecure.put(`/contestsParticipants/${_id}`, {participants: contestParticipants}).then((res) => {
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "Confirmed",
+            text: "Participants added",
+            icon: "success",
+          });
+        }
+      });
+
+      axiosSecure
+        .put(`/contestsRegistered/${_id}`, {
+          contestRegistered: user.email,
+        })
+        .then();
     }
   };
 
+  const handlePostalCodeChange = (event) => {
+    setPostalCode(event.target.value);
+  };
+
   return (
-    <div>
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg">
       <form onSubmit={handleSubmit}>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#424770",
-                "::placeholder": {
-                  color: "#aab7c4",
+        <div className="mb-4">
+          <label className="block mb-1 font-semibold">Card Number</label>
+          <CardNumberElement
+            options={{
+              style: {
+                base: {
+                  fontSize: "16px",
+                  color: "#424770",
+                  "::placeholder": {
+                    color: "#aab7c4",
+                  },
+                },
+                invalid: {
+                  color: "#9e2146",
                 },
               },
-              invalid: {
-                color: "#9e2146",
-              },
-            },
-          }}
-        />
-        <button type="submit" className="btn" disabled={!stripe || !clientSecret}>
+            }}
+            className="p-3 border border-gray-300 rounded-lg w-full"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block mb-1 font-semibold">Expiration Date</label>
+            <CardExpiryElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#424770",
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                  invalid: {
+                    color: "#9e2146",
+                  },
+                },
+              }}
+              className="p-3 border border-gray-300 rounded-lg w-full"
+            />
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">CVC</label>
+            <CardCvcElement
+              options={{
+                style: {
+                  base: {
+                    fontSize: "16px",
+                    color: "#424770",
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                  invalid: {
+                    color: "#9e2146",
+                  },
+                },
+              }}
+              className="p-3 border border-gray-300 rounded-lg w-full"
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label className="block mb-1 font-semibold">Postal Code</label>
+          <input type="text" value={postalCode} onChange={handlePostalCodeChange} className="p-3 border border-gray-300 rounded-lg w-full" placeholder="Enter Postal Code" />
+        </div>
+        <button type="submit" className="btn mt-4 w-full" disabled={!stripe || !clientSecret}>
           Pay
         </button>
       </form>

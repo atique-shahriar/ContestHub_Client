@@ -19,17 +19,16 @@ const MyWinningContest = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Contests: {myWinContest.length}</h3>
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">Winning Contests: {myWinContest.length}</h3>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table text-center">
           {/* head */}
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
-              <th>Deadline</th>
-              <th>Total Participants</th>
-              <th>Winner</th>
+              <th>Contest Name</th>
+              <th>Participants</th>
+              <th>Price (BDT)</th>
             </tr>
           </thead>
           <tbody>
@@ -38,8 +37,8 @@ const MyWinningContest = () => {
               <tr key={contest._id}>
                 <th>{index + 1}</th>
                 <td>{contest.participantContestName}</td>
-                <td>{contest.participantName}</td>
-                <td>{contest.participantEmail}</td>
+                <td>{contest.participantNumber}</td>
+                <td>{contest.participantPrize}</td>
               </tr>
             ))}
           </tbody>

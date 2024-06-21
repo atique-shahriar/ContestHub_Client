@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { AiOutlineComment } from "react-icons/ai";
+import { GiConfirmed } from "react-icons/gi";
+import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import CommentModal from "./CommentModal";
@@ -74,22 +77,21 @@ const ManageContest = () => {
 
   return (
     <div>
-      <dialog
-        id="commentModal"
-        className="modal">
+      <dialog id="commentModal" className="modal">
         <CommentModal contest={contestValue}></CommentModal>
       </dialog>
-      <h3 className="text-center text-3xl">Total Contests: {contests.length}</h3>
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">Total Contests: {contests.length}</h3>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table text-center">
           {/* head */}
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
+              <th>Details</th>
               <th>Participants</th>
               <th>Delete</th>
-              <th>Block Status</th>
+              <th>Confirmation</th>
+              <th>Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -99,37 +101,31 @@ const ManageContest = () => {
                 <th>{index + 1}</th>
                 <td>
                   {contest.contestName} <br />
-                  {contest.contestCreatorName}
+                  <span className="font-bold">Creator: </span> {contest.contestCreatorName}
                 </td>
-                <td>{contest.participants}</td>
+                <td>{contest.contestParticipants}</td>
 
                 <td>
-                  <button
-                    className="btn"
-                    onClick={() => handleDeleteContest(contest)}>
-                    Delete
+                  <button className="text-2xl hover:text-3xl text-red-600" onClick={() => handleDeleteContest(contest)}>
+                    <MdDeleteOutline />
                   </button>
                 </td>
                 <td>
                   {contest.confirmation == true ? (
                     <>
-                      <button className="btn disabled">Confirmed</button>
+                      <span className="disabled text-green-700 font-bold">Confirmed</span>
                     </>
                   ) : (
                     <>
-                      <button
-                        className="btn"
-                        onClick={() => handleConfirmContest(contest)}>
-                        Confirm
+                      <button className="text-2xl hover:text-3xl text-green-700" onClick={() => handleConfirmContest(contest)}>
+                        <GiConfirmed />
                       </button>
                     </>
                   )}
                 </td>
                 <td>
-                  <button
-                    className="btn"
-                    onClick={() => handleComment(contest)}>
-                    Comments
+                  <button className="text-2xl hover:text-3xl text-blue-700" onClick={() => handleComment(contest)}>
+                    <AiOutlineComment />
                   </button>
                 </td>
               </tr>

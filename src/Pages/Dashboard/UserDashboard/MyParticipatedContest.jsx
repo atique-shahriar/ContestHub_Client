@@ -35,17 +35,17 @@ const MyParticipatedContest = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Contests: {contests.length}</h3>
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">My Contests: {contests.length}</h3>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table text-center">
           {/* head */}
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
+              <th>Contest Name</th>
               <th>Deadline</th>
-              <th>Total Participants</th>
-              <th>Block Status</th>
+              <th>Participants</th>
+              <th>Payment Status</th>
             </tr>
           </thead>
           <tbody>
@@ -64,6 +64,8 @@ const MyParticipatedContest = () => {
                             {days} days, {hours} hours, {minutes} minutes, {seconds} seconds
                           </span>
                         );
+                      } else {
+                        return <span className="text-red-600 font-bold">Time Over</span>;
                       }
                     }}
                   />

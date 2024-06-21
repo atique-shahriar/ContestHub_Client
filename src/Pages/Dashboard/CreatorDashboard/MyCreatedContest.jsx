@@ -10,7 +10,7 @@ const MyCreatedContest = () => {
   const {email} = user;
   console.log(email);
 
-  const {data: contests = [], refetch} = useQuery({
+  const {data: contests = []} = useQuery({
     queryKey: ["contests"],
     queryFn: async () => {
       const res = await axiosSecure.get("/contests");
@@ -78,9 +78,7 @@ const MyCreatedContest = () => {
                   )}
                 </td>
                 <td>
-                  <Link
-                    to="/dashboard/contestSubmittedPage"
-                    className="btn">
+                  <Link to="/dashboard/contestSubmittedPage" className="btn">
                     Submission
                   </Link>
                 </td>

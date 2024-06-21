@@ -47,11 +47,11 @@ const UpdateModal = ({myProfile}) => {
         </div>
 
         <div className="w-full flex justify-center">
-          <input className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 border-[#199DFF] border-2 font-medium rounded-lg hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10" type="submit" value="Update" />
+          <input className="px-6 text-white  bg-blue-500 hover:bg-opacity-80 hover:text-black py-2  border-2 font-medium rounded-lg" type="submit" value="Update" />
         </div>
       </form>
       <form method="dialog">
-        <button className="btn btn-sm bg-[#FF3811] text-white hover:text-black btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button className="btn btn-sm bg-blue-500 text-white hover:text-black btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
     </div>
   );

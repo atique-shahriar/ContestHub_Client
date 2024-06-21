@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 const ContestSubmittedPage = () => {
   const [contests, setContests] = useState([]);
   const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     axiosSecure.get("/contests").then((res) => {
       setContests(res.data);
@@ -18,7 +19,6 @@ const ContestSubmittedPage = () => {
       <h3 className="text-center text-3xl">Total Contests: {displayContests.length}</h3>
       <div className="overflow-x-auto">
         <table className="table">
-          {/* head */}
           <thead>
             <tr>
               <th>SL</th>
@@ -27,7 +27,6 @@ const ContestSubmittedPage = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
             {displayContests.map((contest, index) => (
               <tr key={contest._id}>
                 <th>{index + 1}</th>

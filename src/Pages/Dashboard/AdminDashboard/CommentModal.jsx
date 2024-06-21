@@ -27,11 +27,9 @@ const CommentModal = ({contest}) => {
 
   return (
     <div className="modal-box">
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8"
-        onSubmit={handleCommentSubmit}>
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8" onSubmit={handleCommentSubmit}>
         <div className="flex items-center justify-center mb-4">
-          <h4 className="text-2xl font-bold">Comment</h4>
+          <h4 className="text-2xl font-bold">Write Your Comment</h4>
         </div>
         <div>
           <input
@@ -45,11 +43,7 @@ const CommentModal = ({contest}) => {
         </div>
 
         <div className="w-full flex justify-center">
-          <input
-            className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 mt-4 border-[#199DFF] border-2 font-medium rounded-lg hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10"
-            type="submit"
-            value="Comment"
-          />
+          <input className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 mt-4 border-[#199DFF] border-2 font-medium rounded-lg hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10" type="submit" value="Comment" />
         </div>
       </form>
       <form method="dialog">
