@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
         element: <AllContest></AllContest>,
       },
       {
-        path: "about",
+        path: "contactUs",
         element: <About></About>,
       },
       {

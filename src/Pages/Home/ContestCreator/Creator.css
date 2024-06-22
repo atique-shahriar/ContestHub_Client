@@ -1,0 +1,13 @@
+.swiper {
+    width: 100%;
+    padding-top: 30px;
+}
+
+.swiper-slide {
+    width: 400px;
+    min-height: 200px;
+    border-radius: 5px;
+    border-color: rgba(176, 224, 255, 0.729);
+    border-width: 2px;
+
+}

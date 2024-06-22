@@ -18,17 +18,18 @@ const TitleWiseContest = () => {
       return res.data;
     },
   });
+  const findContestName = payments.find((item) => item.contestId == id);
 
   const titleContest = payments.filter((item) => item.contestId == id);
   console.log(titleContest);
 
   useEffect(() => {
-    const availWinner = payments.filter((item) => item.contestWinner === "Winner");
+    const availWinner = titleContest.filter((item) => item.contestWinner === "Winner");
     if (availWinner.length > 0) {
       setWinner(true);
       console.log(availWinner);
     }
-  }, [payments]);
+  }, [titleContest]);
 
   const handleSelectWinner = (contest) => {
     console.log(contest._id);
@@ -50,7 +51,6 @@ const TitleWiseContest = () => {
     const participantName = contest.name;
     const participantEmail = contest.email;
     const participantPhotoUrl = contest.photoUrl;
-    const participantNumber = contest.contestParticipants;
     const participantPrize = contest.contestPriceMoney;
 
     const winnerInfo = {
@@ -60,7 +60,6 @@ const TitleWiseContest = () => {
       participantName,
       participantEmail,
       participantPhotoUrl,
-      participantNumber,
       participantPrize,
     };
     axiosSecure.post("/winners", winnerInfo).then((res) => {
@@ -73,11 +72,11 @@ const TitleWiseContest = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">
-        Participants in {titleContest.contestName}: {titleContest.length}
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">
+        Participants in {findContestName?.contestName}: {titleContest.length}
       </h3>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table text-center">
           {/* head */}
           <thead>
             <tr>
@@ -85,8 +84,6 @@ const TitleWiseContest = () => {
               <th>Participant Name</th>
               <th>Participant Email</th>
               <th>Deadline</th>
-              <th>Total Participants</th>
-
               <th>Winner</th>
             </tr>
           </thead>

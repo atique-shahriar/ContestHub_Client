@@ -69,12 +69,12 @@ const Navbar = () => {
       {user && (
         <li>
           <NavLink
-            to="/about"
+            to="/contactUs"
             style={({isActive}) => {
               return isActive ? {background: "#3672B7", color: "white", fontWeight: "700"} : {};
             }}
           >
-            About
+            Contact Us
           </NavLink>
         </li>
       )}

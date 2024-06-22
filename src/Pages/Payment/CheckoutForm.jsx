@@ -1,10 +1,10 @@
-import {CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe} from "@stripe/react-stripe-js";
-import {PropTypes} from "prop-types";
-import {useContext, useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { PropTypes } from "prop-types";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import {AuthContext} from "../../Providers/AuthProvider";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const CheckoutForm = ({contest}) => {
   const stripe = useStripe();
@@ -100,7 +100,7 @@ const CheckoutForm = ({contest}) => {
         contestParticipants: contestParticipants,
         contestPriceMoney: contestPriceMoney,
         date: new Date(),
-        status: "pending",
+        status: "Paid",
       };
 
       const res = await axiosSecure.post("/payments", payment);

@@ -1,15 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { AiOutlineComment } from "react-icons/ai";
+import { FaEdit } from "react-icons/fa";
 import { GiConfirmed } from "react-icons/gi";
 import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import CommentModal from "./CommentModal";
+import DateEditModal from "./DateEditModal";
 
 const ManageContest = () => {
   const axiosSecure = useAxiosSecure();
   const [contestValue, setContestValue] = useState(null);
+  const [editContest, setEditContest] = useState(null);
 
   const {data: contests = [], refetch} = useQuery({
     queryKey: ["contests"],
@@ -75,10 +78,18 @@ const ManageContest = () => {
     document.getElementById("commentModal").showModal();
   };
 
+  const handleEditDateContest = (contest) => {
+    setEditContest(contest);
+    document.getElementById("editModal").showModal();
+  };
+
   return (
     <div>
       <dialog id="commentModal" className="modal">
         <CommentModal contest={contestValue}></CommentModal>
+      </dialog>
+      <dialog id="editModal" className="modal">
+        <DateEditModal contest={editContest}></DateEditModal>
       </dialog>
       <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">Total Contests: {contests.length}</h3>
       <div className="overflow-x-auto">
@@ -90,6 +101,7 @@ const ManageContest = () => {
               <th>Details</th>
               <th>Participants</th>
               <th>Delete</th>
+              <th>Update Date (Winning Purpose)</th>
               <th>Confirmation</th>
               <th>Comments</th>
             </tr>
@@ -110,6 +122,13 @@ const ManageContest = () => {
                     <MdDeleteOutline />
                   </button>
                 </td>
+                <td>
+                  {" "}
+                  <button className="text-2xl hover:text-3xl text-green-700" onClick={() => handleEditDateContest(contest)}>
+                    <FaEdit />
+                  </button>
+                </td>
+
                 <td>
                   {contest.confirmation == true ? (
                     <>
