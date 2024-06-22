@@ -16,21 +16,21 @@ const ContestSubmittedPage = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Contests: {displayContests.length}</h3>
+      <h3 className="text-3xl font-bold text-[#3672B7] text-center mt-6 mb-4">All Sumbitted Contest: {displayContests.length}</h3>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table text-center">
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
-              <th>Contest Prize Money</th>
+              <th>Contest Name</th>
+              <th>Prize Money</th>
             </tr>
           </thead>
           <tbody>
             {displayContests.map((contest, index) => (
               <tr key={contest._id}>
                 <th>{index + 1}</th>
-                <td>
+                <td className="text-blue-600">
                   <Link to={`/dashboard/contestSubmittedPage/titleWiseContest/${contest._id}`}>{contest.contestName}</Link>
                 </td>
                 <td>{contest.contestPriceMoney}</td>

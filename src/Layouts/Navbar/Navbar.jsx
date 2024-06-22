@@ -66,6 +66,18 @@ const Navbar = () => {
           All Contest
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to="/about"
+            style={({isActive}) => {
+              return isActive ? {background: "#3672B7", color: "white", fontWeight: "700"} : {};
+            }}
+          >
+            About
+          </NavLink>
+        </li>
+      )}
     </>
   );
 

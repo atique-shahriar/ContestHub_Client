@@ -61,7 +61,7 @@ const TitleWiseContest = () => {
       participantEmail,
       participantPhotoUrl,
       participantNumber,
-      participantPrize
+      participantPrize,
     };
     axiosSecure.post("/winners", winnerInfo).then((res) => {
       refetch();
@@ -73,16 +73,20 @@ const TitleWiseContest = () => {
 
   return (
     <div>
-      <h3 className="text-center text-3xl">Total Contests: {titleContest.length}</h3>
+      <h3 className="text-center text-3xl">
+        Participants in {titleContest.contestName}: {titleContest.length}
+      </h3>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
               <th>SL</th>
-              <th>Name</th>
+              <th>Participant Name</th>
+              <th>Participant Email</th>
               <th>Deadline</th>
               <th>Total Participants</th>
+
               <th>Winner</th>
             </tr>
           </thead>
@@ -91,16 +95,15 @@ const TitleWiseContest = () => {
             {titleContest.map((contest, index) => (
               <tr key={contest._id}>
                 <th>{index + 1}</th>
-                <td>{contest.contestName}</td>
-                <td>{contest.email}</td>
                 <td>{contest.name}</td>
+                <td>{contest.email}</td>
                 <td>
                   {
                     <Countdown
                       date={contest.contestDate}
                       renderer={({days, hours, minutes, seconds, completed}) => {
                         if (completed) {
-                          return <span> Time Up {setContestOver(true)}</span>;
+                          return <span className="text-blue-600"> Time Up {setContestOver(true)}</span>;
                         } else {
                           return (
                             <span>

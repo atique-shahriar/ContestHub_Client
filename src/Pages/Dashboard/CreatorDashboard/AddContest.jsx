@@ -23,6 +23,7 @@ const AddContest = () => {
     const contestDeadline = startDate;
     const contestCreatorEmail = user.email;
     const contestCreatorName = user.name;
+    const contestCreatorPhoto = user.photoURL;
     const contestParticipants = 0;
     const confirmation = false;
     const contestInfo = {
@@ -36,6 +37,7 @@ const AddContest = () => {
       contestDeadline,
       contestCreatorEmail,
       contestCreatorName,
+      contestCreatorPhoto,
       contestParticipants,
       confirmation,
     };
@@ -67,14 +69,16 @@ const AddContest = () => {
           <textarea name="contestDescription" required rows="4" placeholder="Write contest description . . . . . . " className="w-full px-4 py-2 border  resize-none rounded-md comment focus:outline-none "></textarea>
         </div>
 
-        <div className="mb-4 mt-4">
-          <label className="block font-bold mb-2">Contest Price</label>
-          <input type="text" name="contestPrice" placeholder="Type contest price" required className="w-full px-4 py-2 border rounded-md focus:outline-none " />
-        </div>
+        <div className="flex gap-6 flex-col md:flex-row w-full items-center mb-4">
+          <div className="w-full">
+            <label className="block font-bold mb-2">Contest Price</label>
+            <input type="text" name="contestPrice" placeholder="Type contest price" required className="w-full px-4 py-2 border rounded-md focus:outline-none " />
+          </div>
 
-        <div className="mb-4 mt-4">
-          <label className="block font-bold mb-2">Contest Prize Money</label>
-          <input type="text" name="contestPrizeMoney" placeholder="Type contest prize money" required className="w-full px-4 py-2 border rounded-md focus:outline-none " />
+          <div className="w-full">
+            <label className="block font-bold mb-2">Contest Prize Money</label>
+            <input type="text" name="contestPrizeMoney" placeholder="Type contest prize money" required className="w-full px-4 py-2 border rounded-md focus:outline-none " />
+          </div>
         </div>
 
         <div className="mb-4 mt-4">
@@ -82,27 +86,29 @@ const AddContest = () => {
           <input type="text" name="contestSubmissionInstruction" placeholder="Type submission instruction" required className="w-full px-4 py-2 border rounded-md focus:outline-none " />
         </div>
 
-        <div className="flex pb-2 flex-col">
-          <label className="block font-bold mb-2">Contest Type</label>
-          <select name="contestType" className="select w-full border select-bordered" defaultValue={"default"}>
-            <option disabled value="default">
-              Select Contest Type
-            </option>
-            <option value="imageDesignContests">Image Design Contests</option>
-            <option value="articleWriting">Article Writing</option>
-            <option value="gamingReview">Gaming Review</option>
-            <option value="bookReview">Book Review</option>
-            <option value="movieReview">Movie Review</option>
-          </select>
-        </div>
+        <div className="flex gap-6 flex-col md:flex-row w-full mb-4">
+          <div className="w-full flex flex-col">
+            <label className="block font-bold mb-2">Contest Type</label>
+            <select name="contestType" className="select min-h-10 h-10 w-full border select-bordered" defaultValue={"default"}>
+              <option disabled value="default">
+                Select Contest Type
+              </option>
+              <option value="imageDesignContests">Image Design Contests</option>
+              <option value="articleWriting">Article Writing</option>
+              <option value="gamingReview">Gaming Review</option>
+              <option value="bookReview">Book Review</option>
+              <option value="movieReview">Movie Review</option>
+            </select>
+          </div>
 
-        <div className="mb-4 ">
-          <label className="block font-bold mb-2">Contest Deadline</label>
-          <DatePicker className="w-full px-4 py-2 border rounded-md focus:outline-none " selected={startDate} onChange={(date) => setStartDate(date)} />
+          <div className="w-full flex flex-col">
+            <label className="block font-bold mb-2">Contest Deadline</label>
+            <DatePicker className="w-full h-10 px-4 py-2 border rounded-md focus:outline-none" selected={startDate} onChange={(date) => setStartDate(date)} />
+          </div>
         </div>
 
         <div className="flex justify-center">
-          <button type="submit" className="bg-[#6ab8fa] hover:bg-[#199DFF] text-white font-medium px-4 py-2 rounded-md">
+          <button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-12 py-2 rounded-md">
             Submit
           </button>
         </div>

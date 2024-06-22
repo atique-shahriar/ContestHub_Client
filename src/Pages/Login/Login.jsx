@@ -24,7 +24,10 @@ const Login = () => {
         console.log(result.user);
         e.target.reset();
         Swal.fire("Successfully login");
-        navigate(location?.state ? location.state : "/");
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
         console.log(error.message);
@@ -37,11 +40,14 @@ const Login = () => {
     signInGoogle(googleProvider)
       .then((result) => {
         Swal.fire("Successfully login");
-        navigate(location?.state ? location.state : "/");
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+          window.location.reload();
+        }, 1000);
         const name = result.user.displayName;
         const email = result.user.email;
-        const photoURL = result.user.photoURL;
-        const user = {name, email, photoURL};
+        const photoUrl = result.user.photoURL;
+        const user = {name, email, photoUrl};
         axiosPublic.post("/users", user).then((res) => {
           console.log(res.data);
         });

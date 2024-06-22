@@ -44,7 +44,10 @@ const Register = () => {
         });
 
         Swal.fire("Register Successfully");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload();
+        }, 1000);
       })
       .catch((error) => {
         toast.error("Error Occured");
@@ -57,73 +60,37 @@ const Register = () => {
       <div className="flex-1 grid md:grid-cols-2 gap-10 bg-gray-100">
         <div className=" hidden md:block px-12">
           <div className="flex justify-center items-center  h-full">
-            <img
-              src="https://t3.ftcdn.net/jpg/02/80/01/64/360_F_280016453_VkNxKbvtljZxNWa3Y4A41BB6gEp1DIjY.jpg"
-              alt=""
-              className="lg:w-4/5"
-            />
+            <img src="https://t3.ftcdn.net/jpg/02/80/01/64/360_F_280016453_VkNxKbvtljZxNWa3Y4A41BB6gEp1DIjY.jpg" alt="" className="lg:w-4/5" />
           </div>
         </div>
         <div className="flex-1 border-l-2 border-gray-200  py-8 px-12 h-fit">
           <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">Register</h3>
           <div>
-            <form
-              className="space-y-4"
-              onSubmit={handleRegisterInfo}>
+            <form className="space-y-4" onSubmit={handleRegisterInfo}>
               <div className="space-y-2">
                 <label>Name</label>
-                <input
-                  type="text"
-                  placeholder="Type Name"
-                  name="name"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="text" placeholder="Type Name" name="name" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Photo Url</label>
-                <input
-                  type="text"
-                  placeholder="Type Photo Url"
-                  name="photoUrl"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="text" placeholder="Type Photo Url" name="photoUrl" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Email</label>
-                <input
-                  type="email"
-                  placeholder="Type Email"
-                  name="email"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="email" placeholder="Type Email" name="email" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="Type Password"
-                  name="password"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="password" placeholder="Type Password" name="password" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="pt-4">
-                <input
-                  type="submit"
-                  value="Register"
-                  className="w-full border rounded-md bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r text-lg hover:border hover:border-[#3263FF] text-white font-semibold px-2 py-2"
-                />
+                <input type="submit" value="Register" className="w-full border rounded-md bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r text-lg hover:border hover:border-[#3263FF] text-white font-semibold px-2 py-2" />
               </div>
             </form>
           </div>
           <div className="space-y-4 mt-4 text-center">
             Have&apos;t any account?{" "}
-            <Link
-              to="/login"
-              className="hover:text-[#FF3811]">
+            <Link to="/login" className="hover:text-[#FF3811]">
               Login account.
             </Link>
           </div>

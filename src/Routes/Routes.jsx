@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Dashboard from "../Layouts/Dashboard/Dashboard";
+import About from "../Pages/About/About";
 import AllContest from "../Pages/AllContest/AllContest";
 import ContestDetail from "../Pages/ContestDetails/ContestDetail";
 import ManageContest from "../Pages/Dashboard/AdminDashboard/ManageContest";
@@ -42,13 +43,17 @@ export const router = createBrowserRouter([
         element: <AllContest></AllContest>,
       },
       {
+        path: "about",
+        element: <About></About>,
+      },
+      {
         path: "contestDetails/:id",
         element: (
           <PrivateRoute>
             <ContestDetail></ContestDetail>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:5000/contests"),
+        loader: () => fetch("https://b9a12-server-side-atique-shahriar.vercel.app/contests"),
       },
       {
         path: "payment/:id",
@@ -57,7 +62,7 @@ export const router = createBrowserRouter([
             <Payment></Payment>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:5000/contests"),
+        loader: () => fetch("https://b9a12-server-side-atique-shahriar.vercel.app/contests"),
       },
     ],
   },
