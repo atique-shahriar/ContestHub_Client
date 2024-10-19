@@ -1,7 +1,8 @@
 <h1>Contest Hub | Contest Management System</h1>
-<hr><br>
+<hr>
 <h3> Live Link: <a href="https://contesthub-fa697.web.app/">Contest Hub</a>
-</h3><br>
+</h3>
+<h4>Tools & Technologies: React, Node, Express, MongoDB, Firebase, Animate.css, Swiper Slider, React Awesome Reveal</h4>
 
 <h2>Website Features:</h2>
 
@@ -33,6 +34,28 @@
 <li>Contest Entry Payment System: Users are required to make a payment to participate in contests. This feature includes secure payment gateways. It ensures that contest entries are taken seriously and contributes to prize pools. </li>
 
 <li>Secure Login System with Firebase: Users can log in securely using Firebase authentication. They can sign in via Google or create an account using their email. This ensures secure and easy access to the platform.</li>
+
+<br>
+<h2>Project Demo:</h2>
+
+<div style="text-align:center">
+    <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-1.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+            <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-2.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+            <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-3.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+            <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-Admin-1.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+                    <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-Admin-2.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+                    <img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-Creator-1.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+
+<img src="https://github.com/atiqueshahriarr/Contest-Hub-Client/blob/main/Contest-Hub-Creator-2.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+</div>
+
 
 <br>
 <h2>Credentials:</h2>
